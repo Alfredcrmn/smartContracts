@@ -1,5 +1,9 @@
 # smartContracts
 
+Nota: La funcionalidad de Python está en el archivo server.py
+
+El archivo main.py es sólo el legacy de las primeras pruebas de conexiones con la BD, previo a la interfaz gráfica. Se deja como herramienta para prueba de nuevas funcionalidades.
+
 📂 Gestor de Documentos con OCR y Búsqueda en Supabase
 Un sistema que permite subir documentos PDF, extraer su texto con OCR, almacenarlos en Supabase y buscarlos por nombre o contenido.
 
@@ -22,7 +26,8 @@ Tesseract OCR	Extrae texto de imágenes en los PDFs
 PostgreSQL (Supabase)	Base de datos para almacenar documentos
 React.js	Interfaz web interactiva
 Axios	Conexión entre frontend y backend
-Material UI / CSS Flat	Diseño moderno y responsivo
+CSS Flat	Diseño moderno y responsivo
+
 📥 Instalación
 Sigue estos pasos para instalar y ejecutar el proyecto en tu máquina local.
 
