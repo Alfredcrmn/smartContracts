@@ -1,3 +1,5 @@
+from flask import Flask, jsonify, request
+from flask_cors import CORS  # Para manejar CORS
 import os
 import fitz  # PyMuPDF para leer PDFs
 import pytesseract
@@ -39,55 +41,62 @@ except Exception as e:
     print(f"❌ Error al conectar a la base de datos: {e}")
     exit()
 
+app = Flask(__name__)
+CORS(app)  # Permitir solicitudes desde React
 
-# 📌 1️⃣ Subir PDF a Supabase Storage
-def upload_pdf_to_supabase(pdf_path, bucket="documents"):
-    with open(pdf_path, "rb") as file:
-        file_data = file.read()
+@app.route("/api/upload", methods=["POST"])
+def upload_pdf():
+    if 'file' not in request.files:
+        return jsonify({"error": "No file part"}), 400
+
+    file = request.files['file']
+    if file.filename == '':
+        return jsonify({"error": "No selected file"}), 400
+
+    file_path = os.path.join("uploads", file.filename)
+    file.save(file_path)
+
+    # Subir PDF a Supabase Storage
+    with open(file_path, "rb") as f:
+        file_data = f.read()
     
-    file_name = os.path.basename(pdf_path)  # Nombre del archivo
-    storage_path = f"{bucket}/{file_name}"  # Ruta en Supabase Storage
+    file_name = os.path.basename(file_path)
+    storage_path = f"documents/{file_name}"
+    response = supabase.storage.from_("documents").upload(file_name, file_data)
+    public_url = f"{SUPABASE_URL}/storage/v1/object/public/documents/{file_name}"
 
-    # Subir el archivo
-    response = supabase.storage.from_(bucket).upload(file_name, file_data)
+    # Extraer texto del PDF
+    extracted_text = extract_text_from_pdf(file_path)
 
-    # Obtener la URL pública del archivo
-    public_url = f"{SUPABASE_URL}/storage/v1/object/public/{bucket}/{file_name}"
-    return public_url
+    # Guardar en la base de datos
+    save_document_to_db(file_name, public_url, extracted_text)
 
+    return jsonify({"message": "File uploaded and processed successfully", "public_url": public_url, "extracted_text": extracted_text})
 
-# 📌 2️⃣ Extraer texto de un PDF escaneado con OCR
 def extract_text_from_pdf(pdf_path):
-    doc = fitz.open(pdf_path)  # Abrir el PDF
+    doc = fitz.open(pdf_path)
     extracted_text = ""
 
-    for i in range(len(doc)):  # Recorre cada página
+    for i in range(len(doc)):
         for img in doc[i].get_images(full=True):
             xref = img[0]
             base_image = doc.extract_image(xref)
             img_bytes = base_image["image"]
 
-            # Convertir bytes a imagen
             img = Image.open(io.BytesIO(img_bytes))
-
-            # Aplicar OCR
             text = pytesseract.image_to_string(img, lang="spa")
             extracted_text += text + "\n\n"
 
     return extracted_text.strip()
 
-
-# 📌 3️⃣ Guardar en Supabase (Documents + Document Text)
 def save_document_to_db(name, pdf_url, extracted_text):
     try:
-        # Insertar en `documents`
         cursor.execute(
             "INSERT INTO documents (name, document_url) VALUES (%s, %s) RETURNING id",
             (name, pdf_url)
         )
-        document_id = cursor.fetchone()[0]  # Obtener el ID del documento insertado
+        document_id = cursor.fetchone()[0]
 
-        # Insertar en `document_text`
         cursor.execute(
             "INSERT INTO document_text (document_id, extracted_text) VALUES (%s, %s)",
             (document_id, extracted_text)
@@ -100,27 +109,5 @@ def save_document_to_db(name, pdf_url, extracted_text):
         print(f"❌ Error al guardar en la base de datos: {e}")
         conn.rollback()
 
-
-# 📌 4️⃣ Ejecutar el proceso completo
-def process_pdf(pdf_path):
-    print("📄 Subiendo PDF a Supabase Storage...")
-    pdf_url = upload_pdf_to_supabase(pdf_path)
-    print(f"✅ PDF subido: {pdf_url}")
-
-    print("🔍 Extrayendo texto con OCR...")
-    extracted_text = extract_text_from_pdf(pdf_path)
-    print("✅ Texto extraído correctamente.")
-
-    print("📦 Guardando en la base de datos...")
-    save_document_to_db(os.path.basename(pdf_path), pdf_url, extracted_text)
-
-    print("🚀 Proceso completado.")
-
-
-# 📌 Ejecutar con un PDF de prueba
-pdf_file = "test2.pdf"
-process_pdf(pdf_file)
-
-# 📌 Cerrar conexión a la base de datos
-cursor.close()
-conn.close()
+if __name__ == "__main__":
+    app.run(debug=True)
