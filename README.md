@@ -25,15 +25,9 @@ Material UI / CSS Flat	Diseño moderno y responsivo
 Sigue estos pasos para instalar y ejecutar el proyecto en tu máquina local.
 
 🔹 1️⃣ Clonar el Repositorio
-sh
-Copiar
-Editar
 git clone https://github.com/tu-usuario/tu-repositorio.git
 cd tu-repositorio
 🔹 2️⃣ Configurar el Backend (Flask + Supabase)
-sh
-Copiar
-Editar
 cd backend
 python -m venv venv      # Crear entorno virtual
 source venv/bin/activate # En macOS/Linux
@@ -42,9 +36,7 @@ pip install -r requirements.txt
 🔹 3️⃣ Configurar las Variables de Entorno
 Crea un archivo .env en la carpeta backend con los siguientes valores:
 
-env
-Copiar
-Editar
+
 SUPABASE_URL=tu-url-de-supabase
 SUPABASE_KEY=tu-api-key
 user=postgres
@@ -53,16 +45,10 @@ host=tu-host-de-supabase
 port=6543
 dbname=postgres
 🔹 4️⃣ Iniciar el Servidor Flask
-sh
-Copiar
-Editar
 python server.py
 📌 El servidor correrá en http://127.0.0.1:5000.
 
 🔹 5️⃣ Configurar el Frontend (React)
-sh
-Copiar
-Editar
 cd frontend
 npm install
 npm start
@@ -91,6 +77,8 @@ Editar
  │   ├── package.json    # Dependencias de React
  ├── README.md           # Documentación del proyecto
  ├── .gitignore          # Archivos ignorados por Git
+
+ 
 🤝 Contribuciones
 ¡Toda contribución es bienvenida! Sigue estos pasos para contribuir:
 
@@ -98,6 +86,8 @@ Haz un Fork del repositorio.
 Crea una rama (git checkout -b nueva-feature).
 Realiza cambios y haz un commit (git commit -m "Agrega nueva feature").
 Envía un Pull Request (git push origin nueva-feature).
+
+
 📄 Licencia
 Este proyecto está bajo la Licencia MIT. Puedes usarlo libremente, pero no olvides dar crédito. 📜
 
