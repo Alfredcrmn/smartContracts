@@ -7,6 +7,7 @@ Un sistema que permite subir documentos PDF, extraer su texto con OCR, almacenar
 📌 Captura de pantalla de la aplicación (Actualiza con una imagen real de tu app).
 
 🚀 Características
+
 ✅ Subida de documentos PDF desde la interfaz.
 ✅ OCR (Reconocimiento de Texto) para extraer contenido de PDFs escaneados.
 ✅ Almacenamiento en Supabase (tanto los archivos como el texto extraído).
@@ -14,6 +15,7 @@ Un sistema que permite subir documentos PDF, extraer su texto con OCR, almacenar
 ✅ Interfaz moderna y minimalista desarrollada en React.
 
 🛠 Tecnologías Usadas
+
 Tecnología	Descripción
 Python (Flask)	Backend API para manejar archivos y OCR
 Tesseract OCR	Extrae texto de imágenes en los PDFs
@@ -25,15 +27,20 @@ Material UI / CSS Flat	Diseño moderno y responsivo
 Sigue estos pasos para instalar y ejecutar el proyecto en tu máquina local.
 
 🔹 1️⃣ Clonar el Repositorio
+
 git clone https://github.com/tu-usuario/tu-repositorio.git
 cd tu-repositorio
+
 🔹 2️⃣ Configurar el Backend (Flask + Supabase)
+
 cd backend
 python -m venv venv      # Crear entorno virtual
 source venv/bin/activate # En macOS/Linux
 # En Windows: venv\Scripts\activate
 pip install -r requirements.txt
+
 🔹 3️⃣ Configurar las Variables de Entorno
+
 Crea un archivo .env en la carpeta backend con los siguientes valores:
 
 
@@ -44,26 +51,29 @@ password=tu-password
 host=tu-host-de-supabase
 port=6543
 dbname=postgres
+
 🔹 4️⃣ Iniciar el Servidor Flask
+
 python server.py
 📌 El servidor correrá en http://127.0.0.1:5000.
 
 🔹 5️⃣ Configurar el Frontend (React)
+
 cd frontend
 npm install
 npm start
+
 📌 La aplicación web se abrirá en http://localhost:3000.
 
 ✨ Uso de la Aplicación
+
 1️⃣ Sube un PDF desde la interfaz.
 2️⃣ Espera la extracción de texto con OCR.
 3️⃣ Consulta el documento guardado en la lista de documentos.
 4️⃣ Usa la barra de búsqueda para encontrar archivos por nombre o contenido.
 
 📦 Estructura del Proyecto
-plaintext
-Copiar
-Editar
+
 📂 tu-repositorio/
  ├── 📂 backend/         # Backend en Flask
  │   ├── server.py       # API principal
