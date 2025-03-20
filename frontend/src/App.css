@@ -1,38 +1,113 @@
-.App {
+/* General */
+body {
+  font-family: "Inter", sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  color: #333;
+}
+
+/*Contenedor */
+.container {
+  max-width: 500px;
+  margin: 30px auto;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+/* Títulos */
+h1, h2 {
+  font-weight: 600;
+  color: #222;
+}
+
+/* Formulario de subida */
+.upload-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+/* Input de archivo */
+.file-input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 100%;
+  cursor: pointer;
+}
+
+/* Botón de subida */
+.upload-btn {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.upload-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Mensajes */
+.message {
+  font-weight: bold;
+  color: #0275d8;
+  margin-top: 10px;
+}
+
+/* Sección de resultados */
+.result-section {
+  background: #fafafa;
+  padding: 15px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  margin-top: 10px;
+}
+
+/* Búsqueda */
+.search-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-top: 15px;
+}
+
+/* Documentos */
+.document-list {
+  margin-top: 15px;
+}
+
+.document-card {
+  background: #fff;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 10px;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.document-link {
+  text-decoration: none;
+  color: #007bff;
+  font-weight: bold;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.document-link:hover {
+  text-decoration: underline;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* 🌟 No documentos */
+.no-documents {
+  color: #e74c3c;
+  font-weight: bold;
 }
