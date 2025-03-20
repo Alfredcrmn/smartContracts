@@ -1,13 +1,15 @@
 from flask import Flask, jsonify, request
-from flask_cors import CORS  # Para manejar CORS
+from flask_cors import CORS 
 import os
-import fitz  # PyMuPDF para leer PDFs
+import fitz  
 import pytesseract
-import psycopg2  # Conexión a PostgreSQL en Supabase
+import psycopg2  
 from PIL import Image
 import io
 from supabase import create_client
 from dotenv import load_dotenv
+import cv2
+import numpy as np
 
 # 📌 Cargar variables de entorno desde .env
 load_dotenv()
@@ -103,10 +105,10 @@ def save_document_to_db(name, pdf_url, extracted_text):
         )
 
         conn.commit()
-        print(f"✅ Documento '{name}' guardado en Supabase con ID {document_id}")
+        print(f"Documento '{name}' guardado en Supabase con ID {document_id}")
 
     except Exception as e:
-        print(f"❌ Error al guardar en la base de datos: {e}")
+        print(f"Error al guardar en la base de datos: {e}")
         conn.rollback()
 
 if __name__ == "__main__":
