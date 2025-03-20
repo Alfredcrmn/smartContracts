@@ -11,10 +11,10 @@ from dotenv import load_dotenv
 import cv2
 import numpy as np
 
-# 📌 Cargar variables de entorno desde .env
+#Cargar variables de entorno desde .env
 load_dotenv()
 
-# 📌 Variables de conexión a Supabase
+#Variables de conexión a Supabase
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 
@@ -24,10 +24,10 @@ HOST = os.getenv("host")
 PORT = os.getenv("port")
 DBNAME = os.getenv("dbname")
 
-# 📌 Conectar a Supabase Storage
+#Conectar a Supabase Storage
 supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
-# 📌 Conectar a Supabase PostgreSQL
+#Conectar a Supabase PostgreSQL
 try:
     conn = psycopg2.connect(
         user=USER,
@@ -37,10 +37,10 @@ try:
         dbname=DBNAME
     )
     cursor = conn.cursor()
-    print("✅ Conexión a la base de datos exitosa.")
+    print("Conexión a la base de datos exitosa.")
 
 except Exception as e:
-    print(f"❌ Error al conectar a la base de datos: {e}")
+    print(f"Error al conectar a la base de datos: {e}")
     exit()
 
 app = Flask(__name__)
